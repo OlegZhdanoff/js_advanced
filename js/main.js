@@ -11,7 +11,7 @@ const renderProduct = (product, img = 'https://placehold.it/200x150') => {
                     <img src="${img}">
                     <h4>${product.title}</h4>
                     <p>${product.price} руб</p>
-                    <button type="button" class="btn btn-primary">В корзину</button>
+                    <button type="button" class="btn btn-primary">В корзину </button>
                 </div>
             </div>`
 };
