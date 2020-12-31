@@ -30,9 +30,14 @@ class ProductsList {
             const productObj = new ProductItem(product);
             block.insertAdjacentHTML('beforeend', productObj.render())
             //            block.innerHTML += productObj.render();
-
         }
-
+        alert(this.getTotalSum())
+    }
+    getTotalSum() {
+        ;
+        let sum = 0;
+        this.goods.forEach(item => sum += item.price);
+        return sum
     }
 }
 
