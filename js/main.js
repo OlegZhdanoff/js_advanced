@@ -152,7 +152,11 @@ class Basket {
         if (product) {
             let prod_id = this.allGoods.findIndex(item => item.id == product.id);
             if (prod_id > -1) {
-                this.allGoods.splice(prod_id, prod_id);
+                if (this.allGoods[prod_id].qty > 1) {
+                    this.allGoods[prod_id].qty--;
+                } else {
+                    prod_id == 0 ? this.allGoods.shift() : this.allGoods.splice(prod_id, prod_id);
+                }
             }
             this.totalSum = this.getTotal();
             this.render();
