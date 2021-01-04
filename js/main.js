@@ -58,10 +58,10 @@ class ProductsList {
 
 class ProductItem {
     constructor(product, img = 'https://placehold.it/200x150') {
-        this.title = product.product_name;
+        this.title = product.product_name ? product.product_name : product.title;
         this.price = product.price;
-        this.id = product.id_product;
-        this.img = img;
+        this.id = product.id_product ? product.id_product : product.id;
+        this.img = product.img ? product.img : img;
 
     }
 
@@ -148,8 +148,15 @@ class Basket {
         }
     }
 
-    delElem() {
-
+    delElem(product) {
+        if (product) {
+            let prod_id = this.allGoods.findIndex(item => item.id == product.id);
+            if (prod_id > -1) {
+                this.allGoods.splice(prod_id, prod_id);
+            }
+            this.totalSum = this.getTotal();
+            this.render();
+        }
     }
 
     getTotal() {
@@ -211,7 +218,7 @@ document.getElementById('basketBody').addEventListener('click', () => {
     console.log(event.target)
     if (event.target.attributes.name.value == 'basketElemAdd') {
         basket.addElem(list.getProductByID(event.target.id));
-    } else if (event.target.name == 'basketElemDel') {
+    } else if (event.target.attributes.name.value == 'basketElemDel') {
         basket.delElem(list.getProductByID(event.target.id));
     }
 });
