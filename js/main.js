@@ -138,21 +138,19 @@ class Basket {
     // }
 
     addElem(product) {
-        let prod_id = this.allGoods.findIndex(item => item.id == product.id);
-        if (prod_id < 0) {
-            this.allGoods.push(new ElemBasket(product));
-        } else {
-            this.allGoods[prod_id].qty++;
+        if (product) {
+            let prod_id = this.allGoods.findIndex(item => item.id == product.id);
+            if (prod_id < 0) {
+                this.allGoods.push(new ElemBasket(product));
+            } else {
+                this.allGoods[prod_id].qty++;
+            }
+            this.totalSum = this.getTotal();
+            this.render();
         }
-        this.totalSum = this.getTotal();
-        this.render();
     }
 
     deleteElem() {
-
-    }
-
-    editElem() {
 
     }
 
