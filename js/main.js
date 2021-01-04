@@ -101,6 +101,7 @@ class Basket {
 
     render() {
         const block = document.getElementById(this.container);
+        const badge = document.getElementById('basketBadge')
         if (this.elems) {
             block.innerHTML = '';
             for (let elem of this.elems) {
@@ -108,8 +109,10 @@ class Basket {
                 block.insertAdjacentHTML('beforeend', elemObj.render());
             }
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Всего в корзине товаров на сумму: ${this.totalSum} руб.</div></div>`);
+            badge.innerText = this.elems.length;
         } else {
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Ваша  корзина пуста...</div></div>`);
+            badge.classList.add('d-none')
         }
     }
 
