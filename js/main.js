@@ -107,21 +107,19 @@ class Basket {
         const block = document.getElementById(this.container);
         const badge = document.getElementById('basketBadge')
         if (this.elems && isNew) {
-            block.innerHTML = '';
             for (let elem of this.elems) {
                 const elemObj = new ElemBasket(elem);
                 this.allGoods.push(elemObj);
-                block.insertAdjacentHTML('beforeend', elemObj.render());
             }
-            block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Всего в корзине товаров на сумму: ${this.totalSum} руб.</div></div>`);
-            badge.innerText = this.elems.length;
-        } else if (this.allGoods) {
+        }
+        if (this.allGoods) {
             block.innerHTML = '';
             for (let goods of this.allGoods) {
                 block.insertAdjacentHTML('beforeend', goods.render());
             }
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Всего в корзине товаров на сумму: ${this.totalSum} руб.</div></div>`);
             badge.innerText = this.allGoods.reduce((qty, goods) => qty += goods.qty, 0);
+            badge.classList.remove('d-none');
         } else {
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Ваша  корзина пуста...</div></div>`);
             badge.classList.add('d-none')
