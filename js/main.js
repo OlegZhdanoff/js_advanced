@@ -43,13 +43,16 @@ class ProductsList {
             cols++;
             const productObj = new ProductItem(product);
             this.allProducts.push(productObj);
-            block.insertAdjacentHTML('beforeend', productObj.render())
-            //            block.innerHTML += productObj.render();
+            block.insertAdjacentHTML('beforeend', productObj.render());
         }
         // alert(this.getTotalSum())
     }
     getTotalSum() {
         return this.allProducts.reduce((accum, item) => accum += item.price, 0);
+    }
+
+    getProductByID(id) {
+        return this.allProducts.find(item => item.id == Number(id.slice(13)));
     }
 }
 
@@ -68,27 +71,28 @@ class ProductItem {
                     <img src="${this.img}" alt="Some img">
                     <h4>${this.title}</h4>
                     <p>${this.price}</p>
-                    <button class="btn btn-primary">Купить</button>
+                    <button class="btn btn-primary" name="buyButton" id="buyProductID_${this.id}">Купить</button>
                 </div>
             </div>`
     }
 }
 
-let list = new ProductsList();
-list.render();
+
 
 
 class Basket {
     constructor(containerID = 'basketBody') {
         this.container = containerID;
         this.elems = [];
+        this.allGoods = [];
         this.totalSum = 0;
         this._getElems()
             .then(data => {
                 this.totalSum = data['amount'];
                 this.elems = [...data['contents']];
-                this.render()
+                this.render(1)
             });
+
     }
 
     _getElems() {
@@ -99,25 +103,49 @@ class Basket {
             })
     }
 
-    render() {
+    render(isNew = 0) {
         const block = document.getElementById(this.container);
         const badge = document.getElementById('basketBadge')
-        if (this.elems) {
+        if (this.elems && isNew) {
             block.innerHTML = '';
             for (let elem of this.elems) {
                 const elemObj = new ElemBasket(elem);
+                this.allGoods.push(elemObj);
                 block.insertAdjacentHTML('beforeend', elemObj.render());
             }
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Всего в корзине товаров на сумму: ${this.totalSum} руб.</div></div>`);
             badge.innerText = this.elems.length;
+        } else if (this.allGoods) {
+            block.innerHTML = '';
+            for (let goods of this.allGoods) {
+                block.insertAdjacentHTML('beforeend', goods.render());
+            }
+            block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Всего в корзине товаров на сумму: ${this.totalSum} руб.</div></div>`);
+            badge.innerText = this.allGoods.reduce((qty, goods) => qty += goods.qty, 0);
         } else {
             block.insertAdjacentHTML('beforeend', `<div class="row"><div class="col-md-auto">Ваша  корзина пуста...</div></div>`);
             badge.classList.add('d-none')
         }
     }
 
-    addElem() {
+    // static setListener(productList) {
+    //     for (let product in productList) {
+    //         document.getElementById(`buyProductID_${product.id}`).addEventListener('click', () => {
+    //             this.addElem(product);
+    //         });
+    //     }
 
+    // }
+
+    addElem(product) {
+        let prod_id = this.allGoods.findIndex(item => item.id == product.id);
+        if (prod_id < 0) {
+            this.allGoods.push(new ElemBasket(product));
+        } else {
+            this.allGoods[prod_id].qty++;
+        }
+        this.totalSum = this.getTotal();
+        this.render();
     }
 
     deleteElem() {
@@ -128,18 +156,19 @@ class Basket {
 
     }
 
-    get_total_sum() {
-
-    }
-    get_qty() {
-
+    getTotal() {
+        return this.allGoods.reduce((total, goods) => total += goods.price * goods.qty, 0);
     }
 }
 
 class ElemBasket extends ProductItem {
     constructor(productItem) {
         super(productItem);
-        this.qty = productItem.quantity;
+        if (productItem.quantity > 0) {
+            this.qty = productItem.quantity;
+        } else {
+            this.qty = 1;
+        }
     }
 
     render() {
@@ -163,6 +192,16 @@ class ElemBasket extends ProductItem {
     }
 }
 
+let list = new ProductsList();
+list.render();
+
 
 let basket = new Basket();
 basket.render();
+// Basket.setListener(list);
+
+document.querySelector(list.container).addEventListener('click', () => {
+    if (event.target.name == 'buyButton') {
+        basket.addElem(list.getProductByID(event.target.id));
+    }
+});
