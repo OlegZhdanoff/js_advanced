@@ -45,6 +45,30 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="textModal" tabindex="-1" aria-labelledby="textModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="textModalLabel">Заменяем одинарные кавычки на двойные</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6" id="sourceText"></div>
+                                <div class="col-sm-6" id="resultText"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" id="textTransform">Преобразовать текст</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">Интернет-магазин</a>
@@ -63,8 +87,11 @@
                             <a class="nav-link" href="#">Продукты</a>
                         </li>
                     </ul>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#textModal">
+                        Text Transform
+                    </button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basketModal">
-                        Корзина <span class="badge badge-light" id="basketBadge">4</span>
+                        Корзина <span class="badge badge-light" id="basketBadge">0</span>
                     </button>
 
                 </div>
