@@ -9,6 +9,7 @@ class List {
         this.allProducts = [];
         this._init();
     }
+
     getJson(url) {
         return fetch(url ? url : `${API + this.url}`)
             .then(result => result.json())
@@ -23,16 +24,6 @@ class List {
     getTotalSum() {
         return this.allProducts.reduce((accum, item) => accum += item.price, 0);
     }
-    // render() {
-    //     const block = document.querySelector(this.container);
-    //     for (let product of this.goods) {
-    //         //console.log(this.constructor.name);
-    //         const productObj = new this.list[this.constructor.name](product);//мы сделали объект товара либо CartItem, либо ProductItem
-    //         console.log(productObj);
-    //         this.allProducts.push(productObj);
-    //         block.insertAdjacentHTML('beforeend', productObj.render());
-    //     }
-    // }
 
     _init() {
         return false
@@ -43,7 +34,6 @@ class List {
     }
 
     getProductByID(id) {
-        // return this.allProducts.find(item => item.id == Number(id.slice(id.lastIndexOf('_') + 1)));
         return this.allProducts.find(item => item.id == +id);
     }
 }
@@ -73,16 +63,9 @@ class ProductsList extends List {
             this.allProducts.push(productObj);
             block.insertAdjacentHTML('beforeend', productObj.render());
         }
-        // alert(this.getTotalSum())
     }
 
     _init() {
-        // document.querySelector(this.container).addEventListener('click', e => {
-        //     if (e.target.classList.contains('buy-btn')) {
-        //         //                console.log(e.target);
-        //         this.cart.addProduct(e.target.dataset['id']);
-        //     }
-        // });
         document.querySelector(this.container).addEventListener('click', e => {
             if (e.target.name == 'buyButton') {
                 this.cart.addElem(this.getProductByID(e.target.dataset['id']));
@@ -119,16 +102,6 @@ class ProductItem extends Item { }
 class Cart extends List {
     constructor(containerID = 'basketBody', url = "/getBasket.json") {
         super(url, containerID);
-        // this.container = containerID;
-        // this.elems = [];
-        // this.allGoods = [];
-        // this.totalSum = 0;
-        // this._getElems()
-        //     .then(data => {
-        //         this.totalSum = data['amount'];
-        //         this.elems = [...data['contents']];
-        //         this.render(1)
-        //     });
         this.getJson()
             .then(data => {
                 this.handleData(data.contents);//вывели все товары в корзине 
@@ -162,15 +135,6 @@ class Cart extends List {
         }
     }
 
-    // static setListener(productList) {
-    //     for (let product in productList) {
-    //         document.getElementById(`buyProductID_${product.id}`).addEventListener('click', () => {
-    //             this.addElem(product);
-    //         });
-    //     }
-
-    // }
-
     addElem(product) {
         if (product) {
             let prod_id = this.allProducts.findIndex(item => item.id == product.id);
@@ -191,7 +155,6 @@ class Cart extends List {
                     this.allProducts[prod_id].qty--;
                 } else {
                     this.allProducts.splice(prod_id, prod_id + 1);
-                    // prod_id == 0 ? this.allProducts.shift() : this.allProducts.splice(prod_id, prod_id);
                 }
             }
             this.render();
@@ -203,16 +166,9 @@ class Cart extends List {
     }
 
     _init() {
-        // document.querySelector('.btn-cart').addEventListener('click', () => {
-        //     document.querySelector(this.container).classList.toggle('invisible');
-        // });
-        // document.querySelector(this.container).addEventListener('click', e => {
-        //     if (e.target.classList.contains('del-btn')) {
-        //         this.removeProduct(e.target);
-        //     }
-        // })
+
         document.getElementById('basketBody').addEventListener('click', e => {
-            // console.log(event.target)
+            // console.log(e.target)
             if (e.target.attributes.name.value == 'basketElemAdd') {
                 this.addElem(this.getProductByID(e.target.dataset['id']));
             } else if (e.target.attributes.name.value == 'basketElemDel') {
@@ -283,21 +239,4 @@ const list2 = {
 };
 
 let cart = new Cart();
-
 let products = new ProductsList(cart);
-
-// document.querySelector(list.container).addEventListener('click', () => {
-//     if (event.target.name == 'buyButton') {
-//         basket.addElem(list.getProductByID(event.target.dataset['id']));
-//     }
-// });
-
-// console.log(document.getElementById('basketBody'));
-// document.getElementById('basketBody').addEventListener('click', () => {
-//     console.log(event.target)
-//     if (event.target.attributes.name.value == 'basketElemAdd') {
-//         basket.addElem(list.getProductByID(event.target.dataset['id']));
-//     } else if (event.target.attributes.name.value == 'basketElemDel') {
-//         basket.delElem(list.getProductByID(event.target.id));
-//     }
-// });
