@@ -9,7 +9,7 @@ function textTransform(src) {
     for (const p in src) {
         if (src[p].innerText) {
             console.log(src[p].innerText);
-            let tmp = src[p].innerText.replace(/\s+'/g, ' "').replace(/('\s+)/g, ' "')
+            let tmp = src[p].innerText.replace(/\s+'/g, ' "').replace(/'\s+/g, '" ')
                 .replace(/('$)/g, '"');
             result += `<p>${tmp}</p>`;
         }

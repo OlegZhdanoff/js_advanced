@@ -109,8 +109,48 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn btn-primary" id="textTransform">Преобразовать текст</button>
+                        <button type="button" class="btn btn-primary" id="textTransform">Преобразовать
+                            текст</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="textModalLabel">Форма обратной связи</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form>
+                                <div class="form-group">
+                                    <label for="nameFeedback">Ваше имя</label>
+                                    <input class="form-control" type="text" placeholder="Имя" id="nameFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneFeedback">Телефон</label>
+                                    <input class="form-control" type="text" placeholder="+7(000)000-0000"
+                                        id="phoneFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailFeedback">E-mail</label>
+                                    <input class="form-control" type="text" placeholder="example@mail.com"
+                                        id="emailFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="messageFeedback">Ваше сообщение</label>
+                                    <textarea class="form-control" id="messageFeedback" rows="4"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="submitFeedback">Отправить</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -132,7 +172,12 @@
                             <a class="nav-link" href="#">Продукты</a>
                         </li>
                     </ul>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#textModal">
+                    <button type="button" class="btn btn-success text-transform" data-toggle="modal"
+                        data-target="#feedbackModal">
+                        Напишите нам
+                    </button>
+                    <button type="button" class="btn btn-info text-transform" data-toggle="modal"
+                        data-target="#textModal">
                         Text Transform
                     </button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basketModal">
@@ -170,6 +215,7 @@
 
     <script src="js/main.js"></script>
     <script src="js/text_transform.js"></script>
+    <script src="js/feedback.js"></script>
 </body>
 
 </html>
