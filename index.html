@@ -130,23 +130,34 @@
                             <form>
                                 <div class="form-group">
                                     <label for="nameFeedback">Ваше имя</label>
+                                    <small class="form-text text-danger d-none" id="nameFeedbackWarning">Имя должно
+                                        содержать только буквы!</small>
                                     <input class="form-control" type="text" placeholder="Имя" id="nameFeedback">
                                 </div>
                                 <div class="form-group">
                                     <label for="phoneFeedback">Телефон</label>
+                                    <small class="form-text text-danger d-none" id="phoneFeedbackWarning">Неверный
+                                        формат телефона!</small>
                                     <input class="form-control" type="text" placeholder="+7(000)000-0000"
                                         id="phoneFeedback">
                                 </div>
                                 <div class="form-group">
                                     <label for="emailFeedback">E-mail</label>
+                                    <small class="form-text text-danger d-none" id="emailFeedbackWarning">Неверный
+                                        адрес почты!</small>
                                     <input class="form-control" type="text" placeholder="example@mail.com"
                                         id="emailFeedback">
                                 </div>
                                 <div class="form-group">
                                     <label for="messageFeedback">Ваше сообщение</label>
+                                    <small class="form-text text-danger d-none" id="messageFeedbackWarning">Пустое
+                                        сообщение!</small>
                                     <textarea class="form-control" id="messageFeedback" rows="4"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="submitFeedback">Отправить</button>
+                                <small class="form-text text-success ml-5 d-none" id="msgSubmitFeedback">Ваше
+                                    сообщение
+                                    отправлено</small>
                             </form>
                         </div>
                     </div>
