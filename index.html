@@ -29,19 +29,139 @@
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row" id="basketBody">
-
                             </div>
                             <div class="row" id="basketSum">
-
                             </div>
-
-
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                         <button type="button" class="btn btn-primary">Оплатить</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="textModal" tabindex="-1" aria-labelledby="textModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-text">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="textModalLabel">Заменяем одинарные кавычки на двойные</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-6" id="sourceText">
+                                    <p>
+                                        One: 'Hi Mary.' Two: 'Oh, hi.'
+                                    </p>
+                                    <p>One: 'How are you doing?'</p>
+                                    <p>
+                                        Two: 'I'm doing alright. How about you?'
+                                    </p>
+                                    <p>
+                                        One: 'Not too bad. The weather is great isn't it?'
+                                    </p>
+                                    <p>
+                                        Two: 'Yes. It's absolutely beautiful today.'
+                                    </p>
+                                    <p>
+                                        One: 'I wish it was like this more frequently.'
+                                    </p>
+                                    <p>
+                                        Two: 'Me too.'
+                                    </p>
+                                    <p>
+                                        One: 'So where are you going now?'
+                                    </p>
+                                    <p>
+                                        Two: 'I'm going to meet a friend of mine at the department store.'
+                                    </p>
+                                    <p>
+                                        One: 'Going to do a little shopping?'
+                                    </p>
+                                    <p>
+                                        Two: 'Yeah, I have to buy some presents for my parents.'
+                                    </p>
+                                    <p>
+                                        One: 'What's the occasion?'
+                                    </p>
+                                    <p>
+                                        Two: 'It's their anniversary.'
+                                    </p>
+                                    <p>
+                                        One: 'That's great. Well, you better get going. You don't want to be late.'
+                                    </p>
+                                    <p>
+                                        Two: 'I'll see you next time.'
+                                    </p>
+                                    <p>
+                                        One: 'Sure. Bye.'
+                                    </p>
+                                </div>
+                                <div class="col-sm-6" id="resultText">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" id="textTransform">Преобразовать
+                            текст</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="textModalLabel">Форма обратной связи</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form>
+                                <div class="form-group">
+                                    <label for="nameFeedback">Ваше имя</label>
+                                    <small class="form-text text-danger d-none" id="nameFeedbackWarning">Имя должно
+                                        содержать только буквы!</small>
+                                    <input class="form-control" type="text" placeholder="Имя" id="nameFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneFeedback">Телефон</label>
+                                    <small class="form-text text-danger d-none" id="phoneFeedbackWarning">Неверный
+                                        формат телефона!</small>
+                                    <input class="form-control" type="text" placeholder="+7(000)000-0000"
+                                        id="phoneFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailFeedback">E-mail</label>
+                                    <small class="form-text text-danger d-none" id="emailFeedbackWarning">Неверный
+                                        адрес почты!</small>
+                                    <input class="form-control" type="text" placeholder="example@mail.com"
+                                        id="emailFeedback">
+                                </div>
+                                <div class="form-group">
+                                    <label for="messageFeedback">Ваше сообщение</label>
+                                    <small class="form-text text-danger d-none" id="messageFeedbackWarning">Пустое
+                                        сообщение!</small>
+                                    <textarea class="form-control" id="messageFeedback" rows="4"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="submitFeedback">Отправить</button>
+                                <small class="form-text text-success ml-5 d-none" id="msgSubmitFeedback">Ваше
+                                    сообщение
+                                    отправлено</small>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -63,8 +183,16 @@
                             <a class="nav-link" href="#">Продукты</a>
                         </li>
                     </ul>
+                    <button type="button" class="btn btn-success text-transform" data-toggle="modal"
+                        data-target="#feedbackModal">
+                        Напишите нам
+                    </button>
+                    <button type="button" class="btn btn-info text-transform" data-toggle="modal"
+                        data-target="#textModal">
+                        Text Transform
+                    </button>
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basketModal">
-                        Корзина <span class="badge badge-light" id="basketBadge">4</span>
+                        Корзина <span class="badge badge-light" id="basketBadge">0</span>
                     </button>
 
                 </div>
@@ -97,6 +225,8 @@
         crossorigin="anonymous"></script>
 
     <script src="js/main.js"></script>
+    <script src="js/text_transform.js"></script>
+    <script src="js/feedback.js"></script>
 </body>
 
 </html>
