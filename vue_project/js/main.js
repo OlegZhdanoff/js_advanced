@@ -4,7 +4,9 @@ const app = new Vue({
     el: '#app',
     data: {
         catalogUrl: '/catalogData.json',
+        basketUrl: '/getBasket.json',
         products: [],
+        cartItems: [],
         imgCatalog: 'https://placehold.it/200x150',
 
         userSearch: '',
@@ -21,7 +23,29 @@ const app = new Vue({
         },
         addProduct(product) {
             console.log(product.id_product);
-        }
+            console.log(this.cartItems);
+            let prod_id = this.cartItems.findIndex(item => item.id_product == product.id_product);
+            console.log(prod_id);
+            if (prod_id > -1) {
+                this.cartItems[prod_id].quantity++;
+            } else {
+                const prod = Object.assign({ quantity: 1 }, product);
+                this.cartItems.push(prod);
+            }
+            // console.log(this.cartItems);
+        },
+        delProduct(product) {
+            console.log(product.id_product);
+            let prod_id = this.cartItems.findIndex(item => item.id_product == product.id_product);
+            if (prod_id > -1) {
+                if (this.cartItems[prod_id].quantity > 1) {
+                    this.cartItems[prod_id].quantity--;
+                } else {
+                    this.cartItems.splice(prod_id, 1);
+                }
+            }
+            console.log(this.cartItems);
+        },
     },
     mounted() {
         this.getJson(`${API + this.catalogUrl}`)
@@ -30,12 +54,25 @@ const app = new Vue({
                     this.products.push(el);
                 }
             });
+        this.getJson(`${API + this.basketUrl}`)
+            .then(data => {
+                for (let el of data.contents) {
+                    this.cartItems.push(el);
+                }
+            });
+        console.log(this.cartItems);
         this.getJson(`getProducts.json`)
             .then(data => {
                 for (let el of data) {
                     this.products.push(el);
                 }
             })
+    },
+    computed: {
+        FilterGoods: function () {
+            return this.products.filter(el =>
+                el.product_name.toLowerCase().includes(this.userSearch.toLowerCase()));;
+        }
     }
 })
 
