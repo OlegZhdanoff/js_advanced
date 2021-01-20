@@ -22,7 +22,7 @@ Vue.component('search', {
         }
     },
     template: `
-    <form action="#" class="search-form" @keydown="$parent.$emit('filtering', 'userSearch')">
+    <form action="#" class="search-form" @keyup="$parent.filtering(userSearch)">
                     <input type="text" class="search-field" v-model="userSearch">
                     <button class="btn-search" type="submit">
                         <i class="fas fa-search"></i>

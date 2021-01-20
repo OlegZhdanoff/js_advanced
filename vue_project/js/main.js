@@ -9,10 +9,8 @@ const app = new Vue({
         filtered: [],
         cartItems: [],
         imgCatalog: 'https://placehold.it/200x150',
-
+        err: false,
         userSearch: '',
-
-
     },
     methods: {
         getJson(url) {
@@ -20,6 +18,7 @@ const app = new Vue({
                 .then(result => result.json())
                 .catch(error => {
                     console.log(error);
+                    err = true;
                 })
         },
         addProduct(product) {
@@ -47,10 +46,10 @@ const app = new Vue({
             }
             console.log(this.cartItems);
         },
-        filtering(items) {
-            console.log(items);
+        filtering(mask) {
+            console.log(mask);
             this.filtered = this.products.filter(el =>
-                el.product_name.toLowerCase().includes(items.toLowerCase()));
+                el.product_name.toLowerCase().includes(mask.toLowerCase()));
         }
     },
     mounted() {
