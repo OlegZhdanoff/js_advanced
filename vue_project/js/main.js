@@ -29,8 +29,8 @@ const app = new Vue({
             if (prod_id > -1) {
                 this.cartItems[prod_id].quantity++;
             } else {
-                product.quantity = 1;
-                this.cartItems.push(product);
+                const prod = Object.assign({ quantity: 1 }, product);
+                this.cartItems.push(prod);
             }
             // console.log(this.cartItems);
         },
@@ -41,7 +41,7 @@ const app = new Vue({
                 if (this.cartItems[prod_id].quantity > 1) {
                     this.cartItems[prod_id].quantity--;
                 } else {
-                    this.cartItems.splice(prod_id, prod_id + 1);
+                    this.cartItems.splice(prod_id, 1);
                 }
             }
             console.log(this.cartItems);
