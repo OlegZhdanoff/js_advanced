@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Интернет-магазин</title>
+    <script src="https://kit.fontawesome.com/280c729014.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="css/normalize.css">
@@ -14,7 +17,7 @@
     <div id="app">
         <header>
             <div class="logo">E-shop</div>
-            <div class="cart">
+            <div>
                 <form action="#" class="search-form">
                     <input type="text" class="search-field" v-model="userSearch">
                     <button class="btn-search" type="submit">
@@ -24,66 +27,10 @@
                 <button class="btn btn-secondary btn-cart" data-toggle="modal" data-target="#basketModal"
                     type="button">Корзина</button>
             </div>
-            <div class="cart-block invisible"></div>
         </header>
+        <cart :cart-items="cartItems" @add-product="addProduct" @del-product="delProduct"></cart>
         <main>
-            <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="basketModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="basketModalLabel">Ваша корзина</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row" id="basketBody">
-                                    <div class="card col-md-12 mb-2" v-for="cartItem in cartItems">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-4">
-                                                <img :src="cartItem.img" class="card-img"
-                                                    alt="Изображение ${cartItem.product_name}">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{cartItem.product_name}}</h5>
-                                                    <p class="card-text"><small class="text-muted">Количество:
-                                                            <b>{{cartItem.quantity}}</b><br>Цена:
-                                                            <b>{{cartItem.price * cartItem.quantity}} руб.</b></small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2 d-flex align-items-center">
-                                                <button type="button" name="basketElemAdd" class="btn btn-link"
-                                                    @click="addProduct(cartItem)">
-                                                    <i name="basketElemAdd" id="basketElemAddID_${this.id}"
-                                                        class="fas fa-plus-square" data-id="${this.id}">
-                                                    </i>
-                                                </button>
-                                                <button type="button" name="basketElemDel" @click="delProduct(cartItem)"
-                                                    class="btn btn-link">
-                                                    <i name="basketElemDel" id="basketElemDelID_${this.id}"
-                                                        class="fas fa-minus-square" data-id="${this.id}">
-                                                    </i>
-                                                </button>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" id="basketSum">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                            <button type="button" class="btn btn-primary">Оплатить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="products">
                 <div class="product-item" v-for="product of FilterGoods" :key="product.id_product">
                     <img :src="imgCatalog" alt="Some img">
@@ -106,7 +53,11 @@
         integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
+
+
+
 </body>
 
 </html>
