@@ -24,7 +24,9 @@
             </div>
         </header>
         <cart :cart-items="cartItems" @add-product="addProduct" @del-product="delProduct"></cart>
+
         <main>
+            <err :err1="err"></err>
             <products :products="filtered" @add-product="addProduct"></products>
 
         </main>
@@ -42,6 +44,7 @@
     <script src="js/search.js"></script>
     <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
+    <script src="js/error.js"></script>
     <script src="js/main.js"></script>
 
 

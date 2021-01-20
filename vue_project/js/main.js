@@ -19,6 +19,7 @@ const app = new Vue({
                 .catch(error => {
                     console.log(error);
                     err = true;
+                    console.log(err);
                 })
         },
         addProduct(product) {
@@ -55,9 +56,14 @@ const app = new Vue({
     mounted() {
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for (let el of data) {
-                    this.products.push(el);
-                    this.filtered = this.products;
+                if (!this.err) {
+                    for (let el of data) {
+                        if (!el.img) {
+                            el.img = this.imgCatalog;
+                        }
+                        this.products.push(el);
+                        this.filtered = this.products;
+                    }
                 }
             });
         this.getJson(`${API + this.basketUrl}`)
