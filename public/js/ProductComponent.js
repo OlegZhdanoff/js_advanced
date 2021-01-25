@@ -35,7 +35,7 @@ Vue.component('product', {
     template: `
             <div class="col-sm-4">
                 <div class="panel product-item">
-                    <img :src="product.img" alt="Some img">
+                    <img :src="product.img" alt="Some img" height=100>
                     <h4>{{product.product_name}}</h4>
                     <p>{{product.price}}</p>
                     <button class="btn btn-primary"
