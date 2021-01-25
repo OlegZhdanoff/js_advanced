@@ -6,7 +6,6 @@ Vue.component('cart', {
             cartUrl: '/getBasket.json',
             cartItems: [],
             imgCart: 'https://placehold.it/50x100',
-            showCart: false
         }
     },
     mounted() {
@@ -18,6 +17,12 @@ Vue.component('cart', {
             });
     },
     methods: {
+        getSum() {
+            return this.cartItems.reduce((sum, el) => sum += el.price * el.quantity, 0)
+        },
+        getQuantity() {
+            return this.cartItems.reduce((sum, el) => sum += el.quantity, 0)
+        },
         addProduct(item) {
             let find = this.cartItems.find(el => el.id_product === item.id_product);
             if (find) {
@@ -62,11 +67,27 @@ Vue.component('cart', {
                     }
                 })
         },
+        delProduct(item) {
+            let find = this.cartItems.findIndex(el => el.id_product === item.id_product);
+            this.$parent.putJson(`/api/cart/${this.cartItems[find].id_product}`, { quantity: -1 })
+                .then(data => {
+                    if (data.result === 1) {
+                        console.log("this.cartItems[find].quantity" + this.cartItems[find].quantity)
+                        if (this.cartItems[find].quantity > 1) {
+                            this.cartItems[find].quantity--;
+                        } else if (this.cartItems[find].quantity === 1) {
+                            this.cartItems.splice(find, 1);
+                        }
+
+                    }
+                }
+                )
+        }
     },
     template: `
     <div>
     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basketModal">
-                        Корзина <span class="badge badge-light" id="basketBadge">{{this.cartItems.length}}</span>
+                        Корзина <span class="badge badge-light" id="basketBadge">{{getQuantity()}}</span>
                     </button>
     <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="basketModalLabel"
         aria-hidden="true">
@@ -82,10 +103,11 @@ Vue.component('cart', {
                     <div class="container-fluid">
                         <div class="row" id="basketBody">
                             <div class="card col-md-12 mb-2">
-                                <cart-item v-for="item of cartItems" :key="item.id_product" :cart-item="item" @remove="remove"></cart-item>
+                                <cart-item v-for="item of cartItems" :key="item.id_product" :cart-item="item"></cart-item>
                             </div>
                         </div>
                     </div>
+                    <h5>Общая стоимость заказа {{ getSum()}} руб.</h5>
                 </div>
                 <div class="row" id="basketSum">
                 </div>
@@ -118,11 +140,11 @@ Vue.component('cart-item', {
             </div>
         </div>
         <div class="col-md-2 d-flex align-items-center">
-            <button type="button" name="basketElemAdd" class="btn btn-link" @click="$parent.$emit('add-product', cartItem)">
+            <button type="button" name="basketElemAdd" class="btn btn-link" @click="$parent.addProduct(cartItem)">
                 <i name="basketElemAdd" class="fas fa-plus-square"">
                         </i>
                                                     </button>
-                    <button type=" button" name="basketElemDel" @click="$emit('remove', cartItem)"
+                    <button type=" button" name="basketElemDel" @click="$parent.delProduct(cartItem)"
                     class="btn btn-link">
                     <i name="basketElemDel""
                         class=" fas fa-minus-square">

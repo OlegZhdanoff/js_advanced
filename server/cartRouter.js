@@ -5,8 +5,8 @@ const handler = require('./handler');
 
 router.get('/', (req, res) => {
     fs.readFile('server/db/userCart.json', 'utf-8', (err, data) => {
-        if(err){
-            res.sendStatus(404, JSON.stringify({result:0, text: err}));
+        if (err) {
+            res.sendStatus(404, JSON.stringify({ result: 0, text: err }));
         } else {
             res.send(data);
         }

@@ -3,8 +3,12 @@ let add = (cart, req) => {
     return JSON.stringify(cart, null, 4);
 };
 let change = (cart, req) => {
-    let find = cart.contents.find(el => el.id_product === +req.params.id);
-    find.quantity += req.body.quantity;
+    let find = cart.contents.findIndex(el => el.id_product === +req.params.id);
+    cart.contents[find].quantity += req.body.quantity;
+    // console.log('cart.contents[find].quantity ' + cart.contents[find].quantity);
+    if (cart.contents[find].quantity < 1) {
+        cart.contents.splice(find, 1);
+    }
     return JSON.stringify(cart, null, 4);
 };
 
