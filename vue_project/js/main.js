@@ -6,12 +6,11 @@ const app = new Vue({
         catalogUrl: '/catalogData.json',
         basketUrl: '/getBasket.json',
         products: [],
+        filtered: [],
         cartItems: [],
         imgCatalog: 'https://placehold.it/200x150',
-
+        err: false,
         userSearch: '',
-
-
     },
     methods: {
         getJson(url) {
@@ -19,6 +18,8 @@ const app = new Vue({
                 .then(result => result.json())
                 .catch(error => {
                     console.log(error);
+                    err = true;
+                    console.log(err);
                 })
         },
         addProduct(product) {
@@ -46,12 +47,23 @@ const app = new Vue({
             }
             console.log(this.cartItems);
         },
+        filtering(mask) {
+            console.log(mask);
+            this.filtered = this.products.filter(el =>
+                el.product_name.toLowerCase().includes(mask.toLowerCase()));
+        }
     },
     mounted() {
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for (let el of data) {
-                    this.products.push(el);
+                if (!this.err) {
+                    for (let el of data) {
+                        if (!el.img) {
+                            el.img = this.imgCatalog;
+                        }
+                        this.products.push(el);
+                        this.filtered = this.products;
+                    }
                 }
             });
         this.getJson(`${API + this.basketUrl}`)
@@ -61,12 +73,12 @@ const app = new Vue({
                 }
             });
         console.log(this.cartItems);
-        this.getJson(`getProducts.json`)
-            .then(data => {
-                for (let el of data) {
-                    this.products.push(el);
-                }
-            })
+        // this.getJson(`getProducts.json`)
+        //     .then(data => {
+        //         for (let el of data) {
+        //             this.products.push(el);
+        //         }
+        //     })
     },
     computed: {
         FilterGoods: function () {
