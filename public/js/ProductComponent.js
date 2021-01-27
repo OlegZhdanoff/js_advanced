@@ -1,5 +1,8 @@
-Vue.component('products', {
+const products = {
     props: ['userSearch',],
+    components: {
+        product
+    },
     data() {
         return {
             catalogUrl: '/catalogData.json',
@@ -29,8 +32,8 @@ Vue.component('products', {
                 :product="item"
                 @add-product="$parent.$refs.cart.addProduct"></product>
                </div>`
-});
-Vue.component('product', {
+};
+const product = {
     props: ['product'],
     template: `
             <div class="col-sm-4">
@@ -43,4 +46,8 @@ Vue.component('product', {
                 </div>
             </div>
     `
-})
+};
+
+export default {
+    products
+}

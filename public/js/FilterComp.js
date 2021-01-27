@@ -1,4 +1,4 @@
-Vue.component('filter-el', {
+const filterEl = {
     data() {
         return {
             userSearch: ''
@@ -17,7 +17,11 @@ Vue.component('filter-el', {
     </form>
     
     `
-})
+};
+
+export default {
+    filterEl
+}
 
 //     < input class="form-control mr-sm-2" type = "search" placeholder = "Search" aria - label="Поиск"
 // v - model="userSearch" @keyup="$parent.$refs.products.filter(userSearch)" >
